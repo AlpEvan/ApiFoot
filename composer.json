@@ -23,6 +23,7 @@
         "guzzlehttp/psr7": "^2",
         "laminas/laminas-diactoros": "^3.6",
         "slim/php-view": "^3.4",
-        "fakerphp/faker": "^1.24"
+        "fakerphp/faker": "^1.24",
+        "guzzlehttp/guzzle": "^7.10"
     }
 }
