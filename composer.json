@@ -1,0 +1,19 @@
+{
+    "name": "evan-alpst/api-foot",
+    "description": "Site de résultat de match",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "EvanAlpst\\ApiFoot\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Evan Alpsteg",
+            "email": "evan.alpst@eduge.ch"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
