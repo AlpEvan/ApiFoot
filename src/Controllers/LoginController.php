@@ -45,7 +45,7 @@ class LoginController extends BaseController
         $password = isset($data['password']) ? filter_var($data['password'], FILTER_UNSAFE_RAW) : null;
 
         if ($email === null || $email === false) {
-            $errors['email'] = "Le numero de compte est invalide";
+            $errors['email'] = "L'email du compte est invalide";
         }
 
         if ($data['password'] === null || trim($data['password']) === '') {
