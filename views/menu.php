@@ -12,7 +12,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/operations">Opérations</a>
                 </li>
-          </ul>
+            </ul>
+            
+            <input 
+                type="text" 
+                class="form-control ms-3" 
+                placeholder="Rechercher..."
+                style="width: 250px;"
+            >
         </div>
     </div>
 </nav>
