@@ -5,7 +5,7 @@ use Slim\Exception\HttpNotFoundException;
 use Slim\Views\PhpRenderer;
 
 require __DIR__ . '/../vendor/autoload.php';
-
+require __DIR__ . '/../helpers.php';
 session_start();
 
 $app = AppFactory::create();
