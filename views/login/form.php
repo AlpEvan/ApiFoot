@@ -10,9 +10,8 @@
                                 <div class="alert alert-danger" role="alert"><?= $errors['credentials'] ?></div>
                             <?php } ?>
                             <div class="mb-3">
-                                <label for="email" class="form-label ">Numéro de compte</label>
-                                <input type="text" class="form-control <?= isset($errors['email']) ? 'is-invalid' : '' ?>" id="email" name="email" placeholder="89457" value="<?= escape($data['email'] ?? '') ?>">
-                                <?php if (isset($errors['email'])) { ?>
+                                <label for="email" class="form-label ">Email</label>
+                                <input type="email" class="form-control <?= isset($errors['email']) ? 'is-invalid' : '' ?>" id="email" name="email" placeholder="exemple@email.com" value="<?= escape($data['email'] ?? '') ?>">                                <?php if (isset($errors['email'])) { ?>
                                     <div class="invalid-feedback"><?= $errors['email'] ?></div>
                                 <?php } ?>
                             </div>

@@ -21,7 +21,7 @@ class UserService
             $email = $_SESSION['user'] ?? null;
 
             if ($email !== null) {
-                $current = $email ? User::findByNumber($email) : null;
+                $current = $email ? User::findByEmail($email) : null;
             }
         }
 

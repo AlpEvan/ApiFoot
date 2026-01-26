@@ -23,10 +23,10 @@ class User extends AbstractModel
     /**
      * Email field
      *
-     * @var int|null
+     * @var string|null
      */
-    public ?int $email = null {
-        set => $this->email = $value;
+    public ?string $email = null {
+        set => $this->email = trim($value);
     }
 
     /**

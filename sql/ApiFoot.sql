@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `User` (
   `userId` int(11) NOT NULL,
-  `email` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `firstname` varchar(100) NOT NULL,
   `lastname` varchar(100) NOT NULL,
@@ -42,9 +42,9 @@ CREATE TABLE `User` (
 --
 
 INSERT INTO `User` (`userId`, `email`, `password`, `firstname`, `lastname`, `createdAt`, `updatedAt`) VALUES
-(1, 123456, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Jean', 'Dupont', '2026-01-26 09:45:55', '2026-01-26 09:45:55'),
-(2, 789012, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Marie', 'Martin', '2026-01-26 09:45:55', '2026-01-26 09:45:55'),
-(3, 345678, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Pierre', 'Bernard', '2026-01-26 09:45:55', '2026-01-26 09:45:55');
+(1, 'exemple@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Jean', 'Dupont', '2026-01-26 09:45:55', '2026-01-26 09:45:55'),
+(2, 'test@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Marie', 'Martin', '2026-01-26 09:45:55', '2026-01-26 09:45:55'),
+(3, 'jeu@poulet.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Pierre', 'Bernard', '2026-01-26 09:45:55', '2026-01-26 09:45:55');
 
 -- --------------------------------------------------------
 

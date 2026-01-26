@@ -41,7 +41,7 @@ class LoginController extends BaseController
 
         $errors = [];
 
-        $email = isset($data['email']) ? filter_var($data['email'], FILTER_VALIDATE_INT) : null;
+        $email = isset($data['email']) ? filter_var($data['email'], FILTER_VALIDATE_EMAIL) : null;
         $password = isset($data['password']) ? filter_var($data['password'], FILTER_UNSAFE_RAW) : null;
 
         if ($email === null || $email === false) {
