@@ -102,10 +102,10 @@ class User extends AbstractModel
     /**
      * Try to find an user by its email
      *
-     * @param int $email
+     * @param string $email
      * @return User|null
      */
-    public static function findByEmail(int $email): User|null
+    public static function findByEmail(string $email): User|null
     {
         $statement = Database::connection()
             ->prepare("select * from User where email = :email");
