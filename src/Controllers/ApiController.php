@@ -13,11 +13,12 @@ class ApiController extends BaseController
     private ApiModel $apiModel;
 
     public function __construct()
-    {    
-        // Initialise ton ApiModel avec ta clé API
+    {
+        $config = require __DIR__ . './../../config/api.php';
+
         $this->apiModel = new ApiModel(
-            $_ENV['f36e80977cmsha061320973cc907p122ef7jsnf686628631cb'], 
-            'https://v3.football.api-sports.io'
+            $config['api_football']['key'],
+            $config['api_football']['url']
         );
     }
 
@@ -26,7 +27,6 @@ class ApiController extends BaseController
         $data = $request->getParsedBody();
         $search = isset($data['search']) ? trim($data['search']) : '';
 
-        // Validation
         if (empty($search) || strlen($search) < 2) {
             return $this->view->render($response, "/search/results.php", [
                 'title' => 'Recherche',
