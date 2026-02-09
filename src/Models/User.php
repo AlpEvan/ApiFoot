@@ -169,17 +169,4 @@ class User extends AbstractModel
 
         return $success;
     }
-
-    public function register(): bool{
-        $statement = Database::connection()
-            ->prepare("INSERT INTO User (email, password, firstName, lastName) VALUES (:email,:password,:)");
-
-        $success = $statement->execute([
-            ':email' => $this->email,
-            ':password' => $this->password,
-            ':firstname' => $this->firstname,
-            ':lastname' => $this->lastname,
-            ':userId' => $this->userId,
-        ]);
-    }
 }

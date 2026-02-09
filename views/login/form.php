@@ -25,6 +25,7 @@
                             <div class="d-grid">
                                 <button class="btn btn-primary" type="submit">Se connecter</button>
                             </div>
+                            <a href="/register"><p>register</p></a>
                         </form>
                     </div>
                 </div>
