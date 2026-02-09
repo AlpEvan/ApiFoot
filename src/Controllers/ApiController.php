@@ -21,7 +21,15 @@ class ApiController extends BaseController
             $config['api_football']['url']
         );
     }
-
+    public function show(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+         return $this->view->render($response, 'matches/showAll.php', [
+            'title' => 'Api Foot - Acceuil',
+            'withMenu' => false,
+            'data' => [],
+            'errors' => [],
+        ]);
+    }
     public function search(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $data = $request->getParsedBody();
