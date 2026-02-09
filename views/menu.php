@@ -16,6 +16,9 @@
             
             <input 
                 type="text" 
+                id="search"
+                name="search"
+                href="/search"
                 class="form-control ms-3" 
                 placeholder="Rechercher..."
                 style="width: 250px;"
