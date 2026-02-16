@@ -1,7 +1,7 @@
 <?php
 return [
     'api_football' => [
-        'key' => 'f36e80977cmsha061320973cc907p122ef7jsnf686628631cb',
-        'url' => 'https://v3.football.api-sports.io'
+        'key' => '51c1c3b9cb1f39ef5b10dceeca0d4355',
+        'url' => ' https://v3.football.api-sports.io'
     ]
 ];

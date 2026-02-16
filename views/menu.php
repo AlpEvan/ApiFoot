@@ -10,9 +10,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Matchs</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/operations">Opérations</a>
-                </li>
             </ul>
 
             <form method="POST" action="/search" class="d-flex">
@@ -20,7 +17,7 @@
                     <input type="text" name="search" class="form-control"
                         placeholder="Chercher une équipe, joueur, ligue..."
                         value="<?= htmlspecialchars($search ?? '') ?>">
-                    <button type="submit" class="btn btn-primary">🔍 Rechercher</button>
+                    <button type="submit" class="btn btn-primary">Rechercher</button>
                 </div>
             </form>
         </div>

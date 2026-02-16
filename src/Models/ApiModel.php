@@ -11,11 +11,13 @@ class ApiModel
 {
     private Client $client;
     private string $apiKey;
+    private string $apiHost;
     private string $baseUrl;
 
-    public function __construct(string $apiKey, string $baseUrl)
+    public function __construct(string $apiKey, string $apiHost, string $baseUrl)
     {
         $this->apiKey = $apiKey;
+        $this->apiHost = $apiHost;
         $this->baseUrl = $baseUrl;
 
         $this->client = new Client([
@@ -23,22 +25,23 @@ class ApiModel
             'timeout' => 10.0,
             'headers' => [
                 'x-rapidapi-key' => $apiKey,
-                'x-rapidapi-host' => 'v3.football.api-sports.io'
+                'x-rapidapi-host' => $apiHost
             ]
         ]);
     }
 
     /**
      * Récupérer les matchs par date
-     * 
-     * @param string $date Format: Y-m-d
-     * @return array
+     * Format date: YYYYMMDD (ex: 20240210)
      */
     public function getMatchesByDate(string $date): array
     {
         try {
-            $response = $this->client->get('/fixtures', [
-                'query' => ['date' => $date]
+            // Convertir Y-m-d en YYYYMMDD
+            $dateFormatted = str_replace('-', '', $date);
+            
+            $response = $this->client->get('/football-get-matches-by-date', [
+                'query' => ['date' => $dateFormatted]
             ]);
 
             return json_decode($response->getBody()->getContents(), true);
@@ -50,16 +53,13 @@ class ApiModel
     }
 
     /**
-     * Chercher une équipe
-     * 
-     * @param string $query
-     * @return array
+     * Chercher des équipes
      */
     public function chercherEquipe(string $query): array
     {
         try {
-            $response = $this->client->get('/teams', [
-                'query' => ['search' => $query]
+            $response = $this->client->get('/football-search-team', [
+                'query' => ['team' => $query]
             ]);
 
             return json_decode($response->getBody()->getContents(), true);
@@ -69,18 +69,15 @@ class ApiModel
             throw new \Exception("Erreur lors de la recherche d'équipes");
         }
     }
-    
+
     /**
-     * Chercher un joueur
-     * 
-     * @param string $query
-     * @return array
+     * Chercher des joueurs
      */
     public function chercherJoueur(string $query): array
     {
         try {
-            $response = $this->client->get('/players', [
-                'query' => ['search' => $query]
+            $response = $this->client->get('/football-search-all-players', [
+                'query' => ['player' => $query]
             ]);
 
             return json_decode($response->getBody()->getContents(), true);
@@ -90,46 +87,20 @@ class ApiModel
             throw new \Exception("Erreur lors de la recherche de joueurs");
         }
     }
-    
+
     /**
-     * Chercher une ligue
-     * 
-     * @param string $query
-     * @return array
+     * Récupérer les ligues populaires
      */
-    public function chercherLigue(string $query): array
+    public function getPopularLeagues(): array
     {
         try {
-            $response = $this->client->get('/leagues', [
-                'query' => ['search' => $query]
-            ]);
+            $response = $this->client->get('/football-get-popular-leagues');
 
             return json_decode($response->getBody()->getContents(), true);
 
         } catch (GuzzleException $e) {
-            error_log("Search Leagues Error: " . $e->getMessage());
-            throw new \Exception("Erreur lors de la recherche de ligues");
-        }
-    }
-    
-    /**
-     * Chercher un pays
-     * 
-     * @param string $query
-     * @return array
-     */
-    public function chercherPays(string $query): array
-    {
-        try {
-            $response = $this->client->get('/countries', [
-                'query' => ['search' => $query]
-            ]);
-
-            return json_decode($response->getBody()->getContents(), true);
-
-        } catch (GuzzleException $e) {
-            error_log("Search Countries Error: " . $e->getMessage());
-            throw new \Exception("Erreur lors de la recherche de pays");
+            error_log("Get Leagues Error: " . $e->getMessage());
+            throw new \Exception("Erreur lors de la récupération des ligues");
         }
     }
 }

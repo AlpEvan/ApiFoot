@@ -15,32 +15,40 @@ class ApiController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        
+
         $config = require __DIR__ . '/../../config/api.php';
 
         $this->apiModel = new ApiModel(
             $config['api_football']['key'],
+            $config['api_football']['host'],
             $config['api_football']['url']
         );
     }
-    
+
     public function show(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        // Récupérer la date depuis les paramètres GET ou utiliser aujourd'hui
         $params = $request->getQueryParams();
         $selectedDate = $params['date'] ?? date('Y-m-d');
-        
+
         try {
-            // Récupérer les matchs depuis l'API
-            $matchesData = $this->apiModel->getMatchesByDate($selectedDate);
-            $matches = $matchesData['response'] ?? [];
-            
-        } catch (\Exception $e) {
-            // En cas d'erreur, tableau vide
+            $matches = $this->apiModel->getMatchesByDate($selectedDate);
+            var_dump($matches);
+            die;
+            if (!is_array($matches)) {
+                throw new \UnexpectedValueException(
+                    'La méthode getMatchesByDate doit retourner un tableau de matchs'
+                );
+            }
+
+
+        } catch (\Throwable $e) {
             $matches = [];
-            error_log("Erreur lors de la récupération des matchs: " . $e->getMessage());
+            error_log(
+                'Erreur lors de la récupération des matchs : ' . $e->getMessage()
+            );
         }
-        
+
+
         return $this->view->render($response, 'matches/showAll.php', [
             'title' => 'Api Foot - Accueil',
             'withMenu' => true,
@@ -50,7 +58,7 @@ class ApiController extends BaseController
             'errors' => [],
         ]);
     }
-    
+
     public function search(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $data = $request->getParsedBody();
@@ -66,20 +74,17 @@ class ApiController extends BaseController
         }
 
         try {
-            // Cherche dans toutes les catégories
             $equipes = $this->apiModel->chercherEquipe($search);
             $joueurs = $this->apiModel->chercherJoueur($search);
-            $ligues = $this->apiModel->chercherLigue($search);
-            $pays = $this->apiModel->chercherPays($search);
 
             return $this->view->render($response, "search/results.php", [
                 'title' => 'Résultats de recherche',
                 'withMenu' => true,
                 'search' => $search,
-                'equipes' => $equipes['response'] ?? [],
-                'joueurs' => $joueurs['response'] ?? [],
-                'ligues' => $ligues['response'] ?? [],
-                'pays' => $pays['response'] ?? []
+                'equipes' => $equipes['result'] ?? [],  // ← À adapter selon la réponse
+                'joueurs' => $joueurs['result'] ?? [],
+                'ligues' => [],
+                'pays' => []
             ]);
 
         } catch (\Exception $e) {
