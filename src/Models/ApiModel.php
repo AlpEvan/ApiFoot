@@ -11,11 +11,13 @@ class ApiModel
 {
     private Client $client;
     private string $apiKey;
+    private string $apiHost;
     private string $baseUrl;
 
-    public function __construct(string $apiKey, string $baseUrl)
+    public function __construct(string $apiKey, string $apiHost, string $baseUrl)
     {
         $this->apiKey = $apiKey;
+        $this->apiHost = $apiHost;
         $this->baseUrl = $baseUrl;
 
         $this->client = new Client([

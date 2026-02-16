@@ -37,10 +37,9 @@ class ApiController extends BaseController
             $config['sportdb']['url']
         );
     }
-    
+
     public function show(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        // Récupérer la date depuis les paramètres GET ou utiliser aujourd'hui
         $params = $request->getQueryParams();
         $selectedDate = $params['date'] ?? date('Y-m-d');
         $timezone = $params['tz'] ?? 1; // UTC+1 par défaut (Europe)
@@ -60,9 +59,12 @@ class ApiController extends BaseController
         } catch (\Exception $e) {
             // En cas d'erreur, tableau vide
             $matches = [];
-            error_log("Erreur lors de la récupération des matchs: " . $e->getMessage());
+            error_log(
+                'Erreur lors de la récupération des matchs : ' . $e->getMessage()
+            );
         }
-        
+
+
         return $this->view->render($response, 'matches/showAll.php', [
             'title' => 'Api Foot - Accueil',
             'withMenu' => true,
@@ -72,7 +74,7 @@ class ApiController extends BaseController
             'errors' => [],
         ]);
     }
-    
+
     public function search(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $data = $request->getParsedBody();

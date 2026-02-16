@@ -17,7 +17,7 @@
                     <input type="text" name="search" class="form-control"
                         placeholder="Chercher une équipe, joueur, ligue..."
                         value="<?= htmlspecialchars($search ?? '') ?>">
-                    <button type="submit" class="btn btn-primary">🔍 Rechercher</button>
+                    <button type="submit" class="btn btn-primary">Rechercher</button>
                 </div>
             </form>
         </div>
