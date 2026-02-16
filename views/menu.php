@@ -10,9 +10,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Matchs</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/operations">Opérations</a>
-                </li>
             </ul>
 
             <form method="POST" action="/search" class="d-flex">

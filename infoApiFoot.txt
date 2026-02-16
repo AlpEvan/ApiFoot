@@ -1,0 +1,96 @@
+===================================
+SPORTDB.DEV - REQUÊTES CURL
+===================================
+
+CLÉ API: XqfvxduCPdUp094Yg3jkOMuLWJaZKyzDAvCUbHZs
+
+
+===================================
+MATCHS PAR DATE
+===================================
+
+Matchs d'aujourd'hui (live):
+curl -H "X-API-Key: XqfvxduCPdUp094Yg3jkOMuLWJaZKyzDAvCUbHZs" "https://api.sportdb.dev/api/flashscore/football/live?offset=0"
+
+Matchs d'hier (terminés):
+curl -H "X-API-Key: XqfvxduCPdUp094Yg3jkOMuLWJaZKyzDAvCUbHZs" "https://api.sportdb.dev/api/flashscore/football/live?offset=-1"
+
+Matchs de demain:
+curl -H "X-API-Key: XqfvxduCPdUp094Yg3jkOMuLWJaZKyzDAvCUbHZs" "https://api.sportdb.dev/api/flashscore/football/live?offset=1"
+
+
+===================================
+DÉTAILS D'UN MATCH
+===================================
+
+Détails d'un match (remplacer SI52Hy9j par l'ID du match):
+curl -H "X-API-Key: XqfvxduCPdUp094Yg3jkOMuLWJaZKyzDAvCUbHZs" "https://api.sportdb.dev/api/flashscore/match/SI52Hy9j/details"
+
+Compositions d'équipes:
+curl -H "X-API-Key: XqfvxduCPdUp094Yg3jkOMuLWJaZKyzDAvCUbHZs" "https://api.sportdb.dev/api/flashscore/match/SI52Hy9j/lineups"
+
+Statistiques du match:
+curl -H "X-API-Key: XqfvxduCPdUp094Yg3jkOMuLWJaZKyzDAvCUbHZs" "https://api.sportdb.dev/api/flashscore/match/SI52Hy9j/stats"
+
+
+
+<?php
+
+/**
+ * VERSION SIMPLE - Récupérer tous les matchs d'une équipe
+ */
+
+// Configuration
+$API_KEY = 'XqfvxduCPdUp094Yg3jkOMuLWJaZKyzDAvCUbHZs';
+$TEAM_NAME = 'Arsenal';  // ← MODIFIER ICI LE NOM DE L'ÉQUIPE
+$DAYS_BACK = 7;          // Nombre de jours dans le passé
+$DAYS_FORWARD = 7;       // Nombre de jours dans le futur
+
+// ============================================
+
+function getTeamMatches($apiKey, $teamName, $daysBack, $daysForward) {
+    $allMatches = [];
+    $teamNameLower = strtolower($teamName);
+    
+    for ($offset = -$daysBack; $offset <= $daysForward; $offset++) {
+        // Requête API
+        $url = "https://api.sportdb.dev/api/flashscore/football/live?offset={$offset}";
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['X-API-Key: ' . $apiKey]);
+        
+        $response = curl_exec($ch);
+        curl_close($ch);
+        
+        $matches = json_decode($response, true);
+        
+        if (!$matches) continue;
+        
+        // Filtrer par équipe
+        foreach ($matches as $match) {
+            if (stripos($match['homeName'], $teamName) !== false || 
+                stripos($match['awayName'], $teamName) !== false) {
+                $allMatches[] = $match;
+            }
+        }
+        
+        usleep(200000); // Pause 0.2s
+    }
+    
+    return $allMatches;
+}
+
+// Récupérer les matchs
+$matches = getTeamMatches($API_KEY, $TEAM_NAME, $DAYS_BACK, $DAYS_FORWARD);
+
+// Afficher les résultats
+echo "\n" . count($matches) . " match(s) trouvé(s) pour $TEAM_NAME:\n\n";
+
+foreach ($matches as $match) {
+    $date = date('d/m/Y H:i', strtotime($match['startDateTimeUtc']));
+    echo "[$date] {$match['homeName']} {$match['homeScore']} - {$match['awayScore']} {$match['awayName']} ({$match['eventStage']})\n";
+}
+
+?>
